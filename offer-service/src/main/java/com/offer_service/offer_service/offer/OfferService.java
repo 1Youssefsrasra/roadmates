@@ -97,12 +97,6 @@ public class OfferService {
                 .collect(Collectors.toList());
     }
 
-    public List<OfferResponse> filterOffers(OfferFilter filter) {
-        return repository.findByFilterCriteria(filter)
-                .stream()
-                .map(mapper::toOfferResponse)
-                .collect(Collectors.toList());
-    }
 
 
 

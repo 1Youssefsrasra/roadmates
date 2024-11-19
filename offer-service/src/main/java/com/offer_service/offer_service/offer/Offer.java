@@ -20,7 +20,7 @@ public class Offer {
     private String arr_location;
     private String time;
     private BigDecimal price;
-    private String nb_place;
+    private Integer nb_place;
     private Integer availableSeats;
 
     @ManyToOne

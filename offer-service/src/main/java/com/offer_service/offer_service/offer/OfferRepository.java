@@ -7,5 +7,4 @@ import java.util.List;
 public interface OfferRepository extends JpaRepository<Offer, Integer> {
     List<Offer> findAllByIdInOrderById( List<Integer> offerIds );
     List<Offer> findAllByPriceBetween(Double minPrice, Double maxPrice);
-    List<Offer> findByFilterCriteria(OfferFilter filter);
 }

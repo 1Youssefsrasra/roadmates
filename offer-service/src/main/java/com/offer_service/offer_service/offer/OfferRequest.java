@@ -16,7 +16,7 @@ public record OfferRequest(
     @Positive(message = "Price should be positive")
     BigDecimal price,
     @NotNull(message = "Nb places is required")
-    String nb_place,
+    Integer nb_place,
     @NotNull(message = "Vehicle is required")
     Integer vehicleId
     )

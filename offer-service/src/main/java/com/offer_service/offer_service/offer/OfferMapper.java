@@ -78,7 +78,7 @@ public class OfferMapper {
      */
     public OfferReservationResponse toOfferReservedResponse(Offer offer, OfferReservationRequest request) {
         // Convert nb_place from String to Integer if necessary
-        Integer availableSeats = Integer.parseInt(offer.getNb_place());
+        Integer availableSeats = offer.getNb_place();
 
         // Calculate the remaining seats
         Integer remainingSeats = availableSeats - request.seatsRequested();

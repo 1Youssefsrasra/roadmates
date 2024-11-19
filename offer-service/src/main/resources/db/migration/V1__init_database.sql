@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS offer (
     arr_location VARCHAR(255) NOT NULL,
     time VARCHAR(255),
     price NUMERIC(10, 2),
-    nb_place VARCHAR(255),
+    nb_place INTEGER,
+    available_seats INTEGER,
     vehicle_id INTEGER,
     CONSTRAINT fk_vehicle
         FOREIGN KEY (vehicle_id)
