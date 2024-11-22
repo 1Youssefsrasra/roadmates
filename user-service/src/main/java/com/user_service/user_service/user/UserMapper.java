@@ -13,15 +13,33 @@ public class UserMapper {
         if (request == null) {
             return null;
         }
+
         return user.builder()
-                .id(request.id())
-                .firstname(request.firstname())
-                .lastname(request.lastname())
-                .email(request.email())
-                .phonenumber(request.phonenumber() != null ? Long.parseLong(request.phonenumber()) : null)
-                .birthday(request.birthday())
-                .Identitycard(request.Identitycard() != null ? Long.parseLong(request.Identitycard()) : null)
-                .address(request.address())
+                .id(request.id()) // Direct assignment; id is already a String.
+                .firstname(request.firstname()) // Direct assignment; firstname is already a String.
+                .lastname(request.lastname()) // Direct assignment; lastname is already a String.
+                .email(request.email()) // Direct assignment; email is already a String.
+                .phonenumber(request.phonenumber()) // No parsing needed; phonenumber is already a Long.
+                .birthday(request.birthday()) // Direct assignment; birthday is already a LocalDate.
+                .Identitycard(request.IdentityCard()) // No parsing needed; Identitycard is already a Long.
+                .address(request.address()) // Assuming Address mapping is correct.
                 .build();
+    }
+
+    public UserResponse fromUser(user user) {
+        if (user == null) {
+            return null;
+        }
+
+        return new UserResponse(
+                user.getId(),          // String
+                user.getFirstname(),   // String
+                user.getLastname(),    // String
+                user.getEmail(),       // String
+                user.getPhonenumber(), // Long
+                user.getBirthday(),    // LocalDate
+                user.getIdentitycard(),// Long
+                user.getAddress()      // Address
+        );
     }
 }

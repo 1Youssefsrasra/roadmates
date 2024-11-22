@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @Getter
 //Indique que cette classe représente une collection MongoDB
 @Document
+@Data
 public class user {
     //l'attribut id comme l'identifiant unique de l'objet dans une base de données,(Primary Key)
     @Id
@@ -24,7 +25,7 @@ public class user {
     private String email;
     private Long phonenumber;
     private LocalDate birthday;
-    private long Identitycard;
+    private Long Identitycard;
     private Address address;
 
 
