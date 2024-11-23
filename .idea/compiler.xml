@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Feedback-service" />
         <module name="config-server" />
+        <module name="Gateway-service" />
         <module name="discovery-server" />
         <module name="user-service" />
       </profile>
@@ -17,6 +18,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Feedback-service" options="-parameters" />
+      <module name="Gateway-service" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="user-service" options="-parameters" />

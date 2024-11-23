@@ -14,4 +14,4 @@ spring:
 
 application:
   config:
-    user-url: http://localhost:8090/api/v1/users
+    user-url: http://localhost:8222/api/v1/users
