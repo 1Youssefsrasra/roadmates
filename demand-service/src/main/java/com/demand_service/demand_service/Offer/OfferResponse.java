@@ -9,4 +9,9 @@ public record OfferResponse(Integer id, Integer availableSeats, String ownerId) 
     public Integer getId() {
         return id;
     }
+
+
+    public String getOwnerId() {
+        return ownerId;
+    }
 }

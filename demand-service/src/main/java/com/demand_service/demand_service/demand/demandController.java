@@ -34,8 +34,8 @@ public class demandController {
     }
 
     @PutMapping("/{demandId}/approve")
-    public ResponseEntity<DemandResponse> approveDemand(@PathVariable Integer demandId, @RequestParam boolean approve) {
-        DemandResponse response = service.approveOrDenyDemand(demandId, approve);
+    public ResponseEntity<DemandResponse> approveDemand(@PathVariable Integer demandId, @RequestParam boolean approve, @PathVariable String ownerId) {
+        DemandResponse response = service.approveOrDenyDemand(demandId, approve, ownerId);
         return ResponseEntity.ok(response);
     }
 
@@ -56,6 +56,44 @@ public class demandController {
             throw new RuntimeException("Error retrieving demands for user: " + userId, e);
         }
     }
+
+
+    @GetMapping("/offers/{offerId}/demands")
+    public List<DemandResponse> getDemandsForOffer(@PathVariable Integer offerId, @RequestHeader("user-id") String currentUserId) {
+        // Fetch the offer details
+        OfferResponse offer = offerClient.getOffer(offerId);
+
+        // Check if the current user is the owner of the offer
+        if (!offer.getOwnerId().equals(currentUserId)) {
+            throw new RuntimeException("Only the owner of the offer can view its demands.");
+        }
+
+        // Fetch demands related to the offer
+        List<Demand> demands = repository.findByOfferId(offerId);
+
+        // Map demands to responses
+        return demands.stream()
+                .map(this::mapToDemandResponse)
+                .toList();
+    }
+
+
+    @GetMapping("/demands/{demandId}")
+    public DemandResponse getDemandStatus(@PathVariable Integer demandId, @RequestHeader("user-id") String currentUserId) {
+        // Fetch the demand
+        Demand demand = repository.findById(demandId)
+                .orElseThrow(() -> new RuntimeException("Demand not found"));
+
+        // Check if the current user is the owner of the demand
+        if (!demand.getUserId().equals(currentUserId)) {
+            throw new RuntimeException("You can only view the status of your own demands.");
+        }
+
+        // Map to response
+        return mapToDemandResponse(demand);
+    }
+
+
 
     private DemandResponse mapToDemandResponse(Demand demand) {
         return new DemandResponse(

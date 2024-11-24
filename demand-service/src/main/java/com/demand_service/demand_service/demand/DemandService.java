@@ -84,16 +84,21 @@ public class DemandService {
         );
     }
 
-    public DemandResponse approveOrDenyDemand(Integer demandId, boolean approve) {
-        // Fetch the demand from the Demand microservice's repository
+    public DemandResponse approveOrDenyDemand(Integer demandId, boolean approve, String currentUserId) {
+        // Fetch the demand
         Demand demand = demandRepository.findById(demandId)
                 .orElseThrow(() -> new RuntimeException("Demand not found"));
 
-        // Fetch the related offer from the Offer microservice using Feign client
+        // Fetch the related offer using the Offer microservice
         OfferResponse offer = offerClient.getOffer(demand.getOfferId());
 
+        // Check if the current user is the owner of the offer
+        if (!offer.getOwnerId().equals(currentUserId)) {
+            throw new RuntimeException("Only the owner of the offer can approve or deny demands.");
+        }
+
         if (approve) {
-            // Check if there are enough seats available
+            // Check seat availability
             if (offer.availableSeats() >= demand.getSeatsRequested()) {
                 // Update available seats in the Offer microservice
                 offerClient.updateAvailableSeats(
@@ -103,11 +108,11 @@ public class DemandService {
                 // Approve the demand
                 demand.setStatus(DemandStatus.APPROVED);
             } else {
-                // Deny the demand due to insufficient seats
+                // Deny if insufficient seats
                 demand.setStatus(DemandStatus.DENIED);
             }
         } else {
-            // Deny the demand as per the user's choice
+            // Deny the demand as per the user's decision
             demand.setStatus(DemandStatus.DENIED);
         }
 
