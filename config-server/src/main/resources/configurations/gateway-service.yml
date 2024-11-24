@@ -15,3 +15,11 @@ spring:
           uri: lb:http://FEEDBACK-SERVICE
           predicates:
             - Path=/api/v1/feedbacks/**
+        - id: offer-service
+          uri: lb:http://OFFER-SERVICE
+          predicates:
+            - Path=/api/v1/offer/**
+        - id: demand-service
+          uri: lb:http://DEMAND-SERVICE
+          predicates:
+            - Path=/api/v1/demand/**
