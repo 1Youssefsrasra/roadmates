@@ -16,7 +16,8 @@ import java.time.LocalDateTime;
 public record FeedbackResponse(
         Integer id,
         Integer rating,
-        String userId,
+        String giverUserId, // ID of the user making the feedback
+        String receiverUserId, // ID of the user receiving the feedback
         String comment
 ) {
 }

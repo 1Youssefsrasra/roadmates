@@ -20,7 +20,7 @@ spring:
           spring.json.type.mapping: demandConfirmation:com.demand_service.demand_service.kafka.DemandConfirmation
 
 server:
-  port: 8070
+  port: 8030
 
 application:
   config:

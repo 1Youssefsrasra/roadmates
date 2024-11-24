@@ -31,9 +31,12 @@ public class Feedback {
     @Column(columnDefinition = "TEXT")
     private String comment; // Feedback comment
 
+ // ID of the user who provided the feedback (linked to User microservice)
     @Column(nullable = false)
-    private String userId; // ID of the user who provided the feedback (linked to User microservice)
+    private String giverUserId; // ID of the user making the feedback
 
+    @Column(nullable = false)
+    private String receiverUserId;
     @CreatedDate
     @Column(updatable = false, nullable = false)
     private LocalDateTime createdDate; // Date when the feedback was created

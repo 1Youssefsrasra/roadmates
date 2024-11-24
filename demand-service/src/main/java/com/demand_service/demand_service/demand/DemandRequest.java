@@ -10,7 +10,7 @@ public record DemandRequest(
         String userId,
         Integer offerId,
         DemandStatus status,
-        Integer seatsRequested,
-        LocalDateTime createdAt
+        Integer seatsRequested
+
 ) {
 }

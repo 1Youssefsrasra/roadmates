@@ -15,13 +15,15 @@ public class FeedbackService {
     private final FeedbackMapper mapper;
     public Integer createFeedback(FeedbackRequest request) {
 //check if the customer exists -> openFeign
-var user = this.userclient.findById(request.userId())
-                .orElseThrow(() -> new BusinessException("Cannot create feedback:: No user exists with the provided ID"));
+// Check if both users (giver and receiver) exist
+        var giverUser = this.userclient.findById(request.giverUserId())
+                .orElseThrow(() -> new BusinessException("Cannot create feedback:: Giver user not found with ID: " + request.giverUserId()));
 
+        var receiverUser = this.userclient.findById(request.receiverUserId())
+                .orElseThrow(() -> new BusinessException("Cannot create feedback:: Receiver user not found with ID: " + request.receiverUserId()));
 
         var feedback = this.repository.save(mapper.toFeedback(request));
      return feedback.getId();}
-
 
     public List<FeedbackResponse> findAllfeedbacks() {
         return this.repository.findAll()
@@ -35,7 +37,8 @@ var user = this.userclient.findById(request.userId())
                 .orElseThrow(() -> new BusinessException("Feedback not found with ID: " + id));
         feedback.setComment(request.comment());
         feedback.setRating(request.rating());
-        feedback.setUserId(request.userId());
+        feedback.setGiverUserId(request.giverUserId());
+        feedback.setReceiverUserId(request.receiverUserId());
         this.repository.save(feedback);
     }
 
@@ -46,13 +49,25 @@ var user = this.userclient.findById(request.userId())
         this.repository.deleteById(id);
     }
 
-    public List<FeedbackResponse> findFeedbacksByUserId(String userId) {
-        // Vérifier si l'utilisateur existe
-        var user = this.userclient.findById(userId)
-                .orElseThrow(() -> new BusinessException("No user found with ID: " + userId));
+    public List<FeedbackResponse> findFeedbacksByReceiverUserId(String receiverUserId) {
+        // Check if the receiver user exists
+        var receiverUser = this.userclient.findById(receiverUserId)
+                .orElseThrow(() -> new BusinessException("No user found with ID: " + receiverUserId));
 
-        // Trouver les feedbacks liés à cet utilisateur
-        return this.repository.findByUserId(userId)
+        // Get feedbacks related to this receiver
+        return this.repository.findByReceiverUserId(receiverUserId)
+                .stream()
+                .map(this.mapper::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    public List<FeedbackResponse> findFeedbacksByGiverUserId(String giverUserId) {
+        // Check if the giver user exists
+        var giverUser = this.userclient.findById(giverUserId)
+                .orElseThrow(() -> new BusinessException("No user found with ID: " + giverUserId));
+
+        // Get feedbacks related to this giver
+        return this.repository.findByGiverUserId(giverUserId)
                 .stream()
                 .map(this.mapper::toResponse)
                 .collect(Collectors.toList());

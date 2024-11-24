@@ -3,19 +3,16 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MavenProjectsManager">
     <option name="originalFiles">
-      <list>
-        <option value="$PROJECT_DIR$/user-service/pom.xml" />
-        <option value="$PROJECT_DIR$/config-server/pom.xml" />
-        <option value="$PROJECT_DIR$/discovery-server/pom.xml" />
-<<<<<<< HEAD
-        <option value="$PROJECT_DIR$/Feedback-service/pom.xml" />
-        <option value="$PROJECT_DIR$/Gateway-service/pom.xml" />
-=======
-        <option value="$PROJECT_DIR$/annonce-service/pom.xml" />
-        <option value="$PROJECT_DIR$/offer-service/pom.xml" />
-        <option value="$PROJECT_DIR$/demand-service/pom.xml" />
->>>>>>> feature/offer-service
-      </list>
+        <list>
+            <option value="$PROJECT_DIR$/user-service/pom.xml" />
+            <option value="$PROJECT_DIR$/config-server/pom.xml" />
+            <option value="$PROJECT_DIR$/discovery-server/pom.xml" />
+            <option value="$PROJECT_DIR$/Feedback-service/pom.xml" />
+            <option value="$PROJECT_DIR$/Gateway-service/pom.xml" />
+            <option value="$PROJECT_DIR$/annonce-service/pom.xml" />
+            <option value="$PROJECT_DIR$/offer-service/pom.xml" />
+            <option value="$PROJECT_DIR$/demand-service/pom.xml" />
+        </list>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />
   </component>

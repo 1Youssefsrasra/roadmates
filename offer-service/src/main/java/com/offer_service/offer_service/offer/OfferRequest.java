@@ -1,12 +1,16 @@
 package com.offer_service.offer_service.offer;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
-
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public record OfferRequest(
     Integer id,
+    @NotBlank(message = "User ID must not be blank")
+    String userId,
     @NotNull(message = "Departure location is required")
     String dep_location,
     @NotNull(message = "Arrival location is required")

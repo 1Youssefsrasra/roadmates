@@ -19,6 +19,8 @@ public record UserRequest(
         @NotNull(message = "user Email is required")
         @Email(message = "user Email is not a valid email address")
         String email,
+        @NotNull(message = "Password is required")
+        String password, // Nouveau champ
         Long phonenumber,
         LocalDate birthday,
         Long IdentityCard,

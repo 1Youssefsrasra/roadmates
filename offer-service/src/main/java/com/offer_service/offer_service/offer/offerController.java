@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/offer")
+@RequestMapping("/api/v1/offers")
 public class offerController {
 
     private final OfferService service;
@@ -24,10 +24,23 @@ public class offerController {
 
     @PostMapping
     public ResponseEntity<Integer> createOffer(@RequestBody @Valid OfferRequest request) {
-        return ResponseEntity.ok(service.createOffer(request));
+        return ResponseEntity.ok(this.service.createOffer(request));
     }
 
+    @GetMapping
+    public ResponseEntity<List<OfferResponse>> findAll(){
+        return ResponseEntity.ok(this.service.findAll());
+    }
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<OfferResponse>> findOffersByUserId(@PathVariable("userId") String userId) {
+        return ResponseEntity.ok(this.service.findOffersByUserId(userId));
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteOffer(@PathVariable("id") Integer id) {
+        this.service.deleteOffer(id);
+        return ResponseEntity.accepted().build();
+    }
 
     @GetMapping("/{offer-id}")
     public ResponseEntity<OfferResponse> findById(
@@ -36,10 +49,6 @@ public class offerController {
         return ResponseEntity.ok(service.findById(offerId));
     }
 
-    @GetMapping
-    public ResponseEntity<List<OfferResponse>> findAll(){
-        return ResponseEntity.ok(service.findAll());
-    }
 
     @PutMapping("/{id}/update-seats")
     public ResponseEntity<Void> updateAvailableSeats(
@@ -55,5 +64,17 @@ public class offerController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateOffer(
+            @PathVariable("id") Integer id,
+            @RequestBody @Valid OfferRequest request
+    ) {
+        this.service.updateOffer(id, request);
+        return ResponseEntity.accepted().build();
+    }
+    @GetMapping("/test")
+    public ResponseEntity<String> test() {
+        return ResponseEntity.ok("Test endpoint is working!");
+    }
 
 }

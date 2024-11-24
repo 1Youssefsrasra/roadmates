@@ -71,5 +71,40 @@ public class UserService {
         this.repository.deleteById(userId);
         return null;
     }
+
+    public String signUp(UserRequest request) {
+        if (StringUtils.isBlank(request.email()) || StringUtils.isBlank(request.password())) {
+            throw new IllegalArgumentException("Email and Password are required for signing up.");
+        }
+        if (this.repository.existsById(request.id())) {
+            throw new IllegalArgumentException("User already exists with this ID.");
+        }
+        var user = this.mapper.toUser(request);
+        user.setId(null); // Let MongoDB generate the ID.
+        this.repository.save(user);
+        return user.getId();
+    }
+
+    public String login(String email, String password) {
+        var user = repository.findAll().stream()
+                .filter(u -> u.getEmail().equals(email) && u.getPassword().equals(password))
+                .findFirst()
+                .orElseThrow(() -> new userNotFoundException("Invalid email or password!"));
+
+        user.setLoggedIn(true);
+        repository.save(user);
+        return "Login successful!";
+    }
+
+    public String logout(String userId) {
+        var user = repository.findById(userId)
+                .orElseThrow(() -> new userNotFoundException("No user found with this ID!"));
+
+        user.setLoggedIn(false);
+        repository.save(user);
+        return "Logout successful!";
+    }
+
+
 }
 

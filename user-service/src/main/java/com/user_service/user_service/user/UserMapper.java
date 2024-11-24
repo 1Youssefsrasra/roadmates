@@ -19,6 +19,7 @@ public class UserMapper {
                 .firstname(request.firstname()) // Direct assignment; firstname is already a String.
                 .lastname(request.lastname()) // Direct assignment; lastname is already a String.
                 .email(request.email()) // Direct assignment; email is already a String.
+                .password(request.password()) // Nouveau champ
                 .phonenumber(request.phonenumber()) // No parsing needed; phonenumber is already a Long.
                 .birthday(request.birthday()) // Direct assignment; birthday is already a LocalDate.
                 .Identitycard(request.IdentityCard()) // No parsing needed; Identitycard is already a Long.

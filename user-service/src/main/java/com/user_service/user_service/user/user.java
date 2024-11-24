@@ -23,6 +23,8 @@ public class user {
     private String firstname;
     private String lastname;
     private String email;
+    private String password; // Nouveau champ pour le mot de passe
+    private boolean isLoggedIn; // Indique si l'utilisateur est connecté
     private Long phonenumber;
     private LocalDate birthday;
     private Long Identitycard;

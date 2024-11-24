@@ -14,6 +14,7 @@ public class OfferMapper {
     public Offer toOffer(OfferRequest request) {
         return Offer.builder()
                 .id(request.id())
+                .userId(request.userId())
                 .dep_location(request.dep_location())
                 .arr_location(request.arr_location())
                 .time(request.time())
@@ -33,6 +34,7 @@ public class OfferMapper {
     public OfferResponse toOfferResponse(Offer offer) {
         return new OfferResponse(
                 offer.getId(),
+                offer.getUserId(),
                 offer.getDep_location(),
                 offer.getArr_location(),
                 offer.getTime(),

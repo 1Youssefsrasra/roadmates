@@ -2,6 +2,8 @@ package com.demand_service.demand_service.demand;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -24,5 +26,7 @@ public class Demand {
     @Enumerated(EnumType.STRING)
     private DemandStatus status;
     private Integer seatsRequested;
+    @CreatedDate
+    @Column(updatable = false, nullable = false)
     private LocalDateTime createdAt;
 }

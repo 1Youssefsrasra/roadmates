@@ -1,5 +1,6 @@
 package com.user_service.user_service.user;
 
+import com.user_service.user_service.exception.userNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,10 @@ public class UserController {
     @PostMapping
     public ResponseEntity<String> createUser(
             @RequestBody @Valid UserRequest request
-    ){
+    ) {
         return ResponseEntity.ok(this.Uservice.createUser(request));
     }
+
     @PutMapping
     public ResponseEntity<Void> updateUser(
             @RequestBody @Valid UserRequest request
@@ -36,32 +38,53 @@ public class UserController {
         this.Uservice.updateUser(request);
         return ResponseEntity.accepted().build();
     }
+
     @GetMapping
-    public ResponseEntity<List<UserResponse>> findAll(){
+    public ResponseEntity<List<UserResponse>> findAll() {
 
         return ResponseEntity.ok(this.Uservice.findAllUsers());
     }
+
     @GetMapping("/exists/{userId}")
     public ResponseEntity<Boolean> existsById(@PathVariable("userId") String userId) {
         // Add logic here
         return ResponseEntity.ok(Uservice.existsById(userId));
     }
+
     @GetMapping("/details/{userId}")
     public ResponseEntity<UserResponse> findById(@PathVariable("userId") String userId) {
         // Add logic here
         return ResponseEntity.ok(Uservice.findById(userId));
     }
+
     @DeleteMapping("/delete/{userId}")
     public ResponseEntity<Void> deleteById(@PathVariable("userId") String userId) {
         // Add logic here
-       this.Uservice.deleteUser(userId);
-       return ResponseEntity.accepted().build();
-    }
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        return ResponseEntity.ok("Test endpoint is working!");
+        this.Uservice.deleteUser(userId);
+        return ResponseEntity.accepted().build();
     }
 
-}
+
+    @PostMapping("/signup")
+    public ResponseEntity<String> signUp(@RequestBody @Valid UserRequest request) {
+        return ResponseEntity.ok(Uservice.signUp(request));
+    }
+
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+        try {
+            String response = Uservice.login(loginRequest.email(), loginRequest.password());
+            return ResponseEntity.ok(response);
+        } catch (userNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }}
+        @GetMapping("/test")
+        public ResponseEntity<String> test () {
+            return ResponseEntity.ok("Test endpoint is working!");
+        }
+
+
+    }
 
 

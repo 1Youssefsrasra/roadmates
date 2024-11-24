@@ -40,9 +40,13 @@ public class FeedbackController {
         this.service.deleteFeedback(id);
         return ResponseEntity.accepted().build();
     }
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<FeedbackResponse>> findFeedbacksByUserId(@PathVariable("userId") String userId) {
-        return ResponseEntity.ok(this.service.findFeedbacksByUserId(userId));
+    @GetMapping("/giver/{giverUserId}")
+    public ResponseEntity<List<FeedbackResponse>> findFeedbacksByGiverUserId(@PathVariable("giverUserId") String giverUserId) {
+        return ResponseEntity.ok(this.service.findFeedbacksByGiverUserId(giverUserId));
+    }
+    @GetMapping("/receiver/{receiverUserId}")
+    public ResponseEntity<List<FeedbackResponse>> findFeedbacksByReceiverUserId(@PathVariable("receiverUserId") String receiverUserId) {
+        return ResponseEntity.ok(this.service.findFeedbacksByReceiverUserId(receiverUserId));
     }
     @GetMapping("/test")
     public ResponseEntity<String> test() {

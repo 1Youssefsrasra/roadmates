@@ -16,7 +16,9 @@ public record FeedbackRequest(
         @Max(value = 5, message = "Rating must be at most 5")
         Integer rating,
         @NotBlank(message = "User ID must not be blank")
-        String userId,
+        String giverUserId,
+        @NotBlank(message = "User ID must not be blank")
+        String receiverUserId,
         String comment
 ) {
 }

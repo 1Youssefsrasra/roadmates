@@ -8,7 +8,8 @@ public class FeedbackMapper {
         return Feedback.builder()
                // .rideReference(request.rideReference())
                 .rating(request.rating())
-                .userId(request.userId())
+                .giverUserId(request.giverUserId())
+                .receiverUserId(request.receiverUserId())
                 .comment(request.comment())
                 .build();
     }
@@ -18,7 +19,8 @@ public class FeedbackMapper {
                 .id(feedback.getId())
                 //.rideReference(feedback.getRideReference())
                 .rating(feedback.getRating())
-                .userId(feedback.getUserId())
+                .giverUserId(feedback.getGiverUserId())
+                .receiverUserId(feedback.getReceiverUserId())
                 .comment(feedback.getComment())
                 .build();
     }
