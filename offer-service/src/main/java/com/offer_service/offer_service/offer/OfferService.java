@@ -3,6 +3,7 @@ package com.offer_service.offer_service.offer;
 import com.offer_service.offer_service.exception.OfferReservationException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,11 +15,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OfferService {
 
+    @Autowired
     private final OfferRepository repository;
     private final OfferMapper mapper;
     public Integer createOffer(OfferRequest request) {
         var offer = mapper.toOffer(request);
-        offer.setAvailableSeats(Integer.valueOf(offer.getNb_place()));
         return repository.save(offer).getId();
     }
 
@@ -96,6 +97,8 @@ public class OfferService {
                 .map(mapper::toOfferResponse)
                 .collect(Collectors.toList());
     }
+
+
 
 
 

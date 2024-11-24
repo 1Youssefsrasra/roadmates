@@ -8,11 +8,9 @@ public record OfferResponse(
         String arr_location,
         String time,
         BigDecimal price,
-        Integer nb_place,
-        Integer vehicle_Id,
+        Integer availableSeats,
         String matriculationNumber,
         String brand,
-        String model,
         String color
 
 ) {

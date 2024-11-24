@@ -1,6 +1,5 @@
 package com.offer_service.offer_service.offer;
 
-import com.offer_service.offer_service.vehicle.Vehicle;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,13 +19,10 @@ public class Offer {
     private String arr_location;
     private String time;
     private BigDecimal price;
-    private Integer nb_place;
     private Integer availableSeats;
-
-    @ManyToOne
-    @JoinColumn(name = "vehicle_id")
-    private Vehicle vehicle;
-
+    private String matriculationNumber;
+    private String brand;
+    private String color;
 
 
 }

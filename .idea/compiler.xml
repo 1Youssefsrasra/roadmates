@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
+        <module name="demand-service" />
         <module name="user-service" />
         <module name="discovery-server" />
         <module name="offer-service" />
@@ -17,6 +18,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="config-server" options="-parameters" />
+      <module name="demand-service" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="offer-service" options="-parameters" />
       <module name="user-service" options="-parameters" />

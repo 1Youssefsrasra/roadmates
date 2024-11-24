@@ -1,6 +1,5 @@
 package com.offer_service.offer_service.offer;
 
-import com.offer_service.offer_service.vehicle.Vehicle;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,11 +18,9 @@ public class OfferMapper {
                 .arr_location(request.arr_location())
                 .time(request.time())
                 .price(request.price())
-                .nb_place(request.nb_place())
-                .vehicle(
-                        Vehicle.builder()
-                                .vehicle_id(request.vehicleId())
-                                .build())
+                .matriculationNumber(request.matriculationNumber())
+                .color(request.color())
+                .brand(request.brand())
                 .build();
     }
 
@@ -40,12 +37,11 @@ public class OfferMapper {
                 offer.getArr_location(),
                 offer.getTime(),
                 offer.getPrice(),
-                offer.getNb_place(),
-                offer.getVehicle().getVehicle_id(),
-                offer.getVehicle().getBrand(),
-                offer.getVehicle().getModel(),
-                offer.getVehicle().getColor(),
-                offer.getVehicle().getMatriculationNumber()
+                offer.getAvailableSeats(),
+                offer.getMatriculationNumber(),
+                offer.getBrand(),
+                offer.getColor()
+
         );
     }
 
@@ -60,13 +56,7 @@ public class OfferMapper {
         offer.setArr_location(request.arr_location());
         offer.setTime(request.time());
         offer.setPrice(request.price());
-        offer.setNb_place(request.nb_place());
 
-        if (offer.getVehicle() == null) {
-            offer.setVehicle(new Vehicle());
-        }
-
-        offer.getVehicle().setVehicle_id(request.vehicleId());
     }
 
     /**
@@ -91,9 +81,7 @@ public class OfferMapper {
                 offer.getPrice(),
                 request.seatsRequested(), // Number of seats requested
                 remainingSeats,  // Remaining seats
-                offer.getVehicle().getVehicle_id(),
-                offer.getVehicle().getBrand(),
-                offer.getVehicle().getModel()
+
         );
     }
 }

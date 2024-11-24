@@ -15,10 +15,14 @@ public record OfferRequest(
     String time,
     @Positive(message = "Price should be positive")
     BigDecimal price,
-    @NotNull(message = "Nb places is required")
-    Integer nb_place,
+    @Positive(message = "Available should be positive")
+    Integer availableSeats,
     @NotNull(message = "Vehicle is required")
-    Integer vehicleId
+    String matriculationNumber,
+    @NotNull(message = "Vehicle is required")
+    String brand,
+    @NotNull(message = "Vehicle is required")
+    String color
     )
 {
 }

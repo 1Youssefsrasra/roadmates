@@ -33,6 +33,7 @@
     <retain-sticky-names value="false" />
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
+    <mapping file-url="file://$PROJECT_DIR$/offer-service/src/main/resources/db/migration/V2_insert_data.sql" connection-id="3d4f5996-7f25-46d2-b631-1bae4107e0a1" session-id="MAIN" current-schema="public" />
     <mapping file-url="file://$PROJECT_DIR$/offer-service/src/main/resources/db/migration/V1__init_database.sql" connection-id="3d4f5996-7f25-46d2-b631-1bae4107e0a1" session-id="MAIN" current-schema="public" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">

@@ -9,10 +9,18 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/offer")
-@RequiredArgsConstructor
 public class offerController {
 
     private final OfferService service;
+    private final OfferRepository offerRepository;
+
+
+    // Constructor to initialize both service and repository
+    public offerController(OfferService service, OfferRepository offerRepository) {
+        this.service = service;
+        this.offerRepository = offerRepository;
+    }
+
 
     @PostMapping
     public ResponseEntity<Integer> createOffer(@RequestBody @Valid OfferRequest request) {
@@ -24,7 +32,7 @@ public class offerController {
         return ResponseEntity.ok(service.reserveOffer(request));
     }
 
-    @GetMapping("{offer-id}")
+    @GetMapping("/{offer-id}")
     public ResponseEntity<OfferResponse> findById(
             @PathVariable("offer-id") Integer offerId
     ){
@@ -36,7 +44,19 @@ public class offerController {
         return ResponseEntity.ok(service.findAll());
     }
 
+    @PutMapping("/{id}/update-seats")
+    public ResponseEntity<Void> updateAvailableSeats(
+            @PathVariable Integer id,
+            @RequestParam Integer newAvailableSeats
+    ) {
+        Offer offer = offerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Offer not found"));
 
+        offer.setAvailableSeats(newAvailableSeats);
+        offerRepository.save(offer);
+
+        return ResponseEntity.ok().build();
+    }
 
 
 }
