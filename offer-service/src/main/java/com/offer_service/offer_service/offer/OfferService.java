@@ -23,42 +23,6 @@ public class OfferService {
         return repository.save(offer).getId();
     }
 
-    public List<OfferReservationResponse> reserveOffer(List<OfferReservationRequest> request) {
-        var offerIds= request
-                .stream()
-                .map(OfferReservationRequest::offerID)
-                .toList();
-
-        var storedOffers = repository.findAllByIdInOrderById(offerIds);
-        if (offerIds.size() != storedOffers.size()){
-            throw new OfferReservationException("One or more offers does not exists");
-        }
-
-        // Sort the requests and offers to ensure matching order
-        var sortedRequests = request.stream()
-                .sorted(Comparator.comparing(OfferReservationRequest::offerID))
-                .toList();
-
-        var reservedOffers = new ArrayList<OfferReservationResponse>();
-        for (int i = 0; i < storedOffers.size(); i++) {
-            var offer = storedOffers.get(i);
-            var offerRequest = sortedRequests.get(i);
-
-            // Check if the offer can be reserved (e.g., check seat availability)
-            if (offer.getAvailableSeats() < offerRequest.seatsRequested()) {
-                throw new OfferReservationException("Insufficient seats for offer ID: " + offer.getId());
-            }
-
-            // Reserve the seats and update the offer
-            offer.setAvailableSeats(offer.getAvailableSeats() - offerRequest.seatsRequested());
-            repository.save(offer);
-
-            // Add the reserved offer response
-            reservedOffers.add(mapper.toOfferReservedResponse(offer, offerRequest));
-        }
-
-        return reservedOffers;
-    }
 
     public OfferResponse findById(Integer offerId) {
         return repository.findById(offerId)

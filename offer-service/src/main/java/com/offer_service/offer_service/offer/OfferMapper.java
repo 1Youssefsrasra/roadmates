@@ -59,29 +59,5 @@ public class OfferMapper {
 
     }
 
-    /**
-     * Converts an Offer and OfferReservationRequest into an OfferReservationResponse.
-     *
-     * @param offer   the reserved Offer entity
-     * @param request the reservation request
-     * @return the OfferReservationResponse
-     */
-    public OfferReservationResponse toOfferReservedResponse(Offer offer, OfferReservationRequest request) {
-        // Convert nb_place from String to Integer if necessary
-        Integer availableSeats = offer.getNb_place();
 
-        // Calculate the remaining seats
-        Integer remainingSeats = availableSeats - request.seatsRequested();
-
-        return new OfferReservationResponse(
-                offer.getId(),
-                offer.getDep_location(),
-                offer.getArr_location(),
-                offer.getTime(),
-                offer.getPrice(),
-                request.seatsRequested(), // Number of seats requested
-                remainingSeats,  // Remaining seats
-
-        );
-    }
 }

@@ -27,10 +27,7 @@ public class offerController {
         return ResponseEntity.ok(service.createOffer(request));
     }
 
-    @PostMapping("/reserve")
-    public ResponseEntity<List<OfferReservationResponse>> reserveOffer(@RequestBody List<OfferReservationRequest> request){
-        return ResponseEntity.ok(service.reserveOffer(request));
-    }
+
 
     @GetMapping("/{offer-id}")
     public ResponseEntity<OfferResponse> findById(

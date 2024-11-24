@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @Setter
 @Builder
 @Entity
+@Table(name = "offer")
 public class Offer {
     @Id
     @GeneratedValue

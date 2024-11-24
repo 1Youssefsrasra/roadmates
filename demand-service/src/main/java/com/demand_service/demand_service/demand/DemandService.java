@@ -7,6 +7,7 @@ import com.demand_service.demand_service.kafka.DemandConfirmation;
 import com.demand_service.demand_service.kafka.DemandProducer;
 import com.demand_service.demand_service.user.UserClient;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -20,7 +21,7 @@ public class DemandService {
 
     private final OfferClient offerClient;
     private final DemandRepository demandRepository;
-
+    @Autowired
     public DemandService(DemandRepository demandRepository, OfferClient offerClient) {
         this.demandRepository = demandRepository;
         this.offerClient = offerClient;
