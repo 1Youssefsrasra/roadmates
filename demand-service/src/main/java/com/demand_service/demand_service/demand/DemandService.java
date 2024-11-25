@@ -42,6 +42,7 @@ public class DemandService {
         demand.setSeatsRequested(request.seatsRequested());
         demand.setStatus(DemandStatus.PENDING);
 
+
         // Save the demand to the database
         demandRepository.save(demand);
 
@@ -85,7 +86,12 @@ public class DemandService {
         );
     }
 
-    public DemandResponse approveOrDenyDemand(Integer demandId, boolean approve, String currentUserId) {
+
+    public void deleteDemand(Integer id) {
+        // Delete demand by ID
+        demandRepository.deleteById(id);
+    }
+    public DemandResponse approveDemand(Integer demandId, String currentUserId) {
         // Fetch the demand
         Demand demand = demandRepository.findById(demandId)
                 .orElseThrow(() -> new RuntimeException("Demand not found"));
@@ -95,26 +101,20 @@ public class DemandService {
 
         // Check if the current user is the owner of the offer
         if (!offer.getOwnerId().equals(currentUserId)) {
-            throw new RuntimeException("Only the owner of the offer can approve or deny demands.");
+            throw new RuntimeException("Only the owner of the offer can approve demands.");
         }
 
-        if (approve) {
-            // Check seat availability
-            if (offer.availableSeats() >= demand.getSeatsRequested()) {
-                // Update available seats in the Offer microservice
-                offerClient.updateAvailableSeats(
-                        offer.getId(),
-                        offer.availableSeats() - demand.getSeatsRequested()
-                );
-                // Approve the demand
-                demand.setStatus(DemandStatus.APPROVED);
-            } else {
-                // Deny if insufficient seats
-                demand.setStatus(DemandStatus.DENIED);
-            }
+        // Check seat availability
+        if (offer.availableSeats() >= demand.getSeatsRequested()) {
+            // Update available seats in the Offer microservice
+            offerClient.updateAvailableSeats(
+                    offer.getId(),
+                    offer.availableSeats() - demand.getSeatsRequested()
+            );
+            // Approve the demand
+            demand.setStatus(DemandStatus.APPROVED);
         } else {
-            // Deny the demand as per the user's decision
-            demand.setStatus(DemandStatus.DENIED);
+            throw new RuntimeException("Insufficient available seats to approve this demand.");
         }
 
         // Save the updated demand
@@ -130,4 +130,36 @@ public class DemandService {
                 demand.getCreatedAt()
         );
     }
+
+    public DemandResponse denyDemand(Integer demandId, String currentUserId) {
+        // Fetch the demand
+        Demand demand = demandRepository.findById(demandId)
+                .orElseThrow(() -> new RuntimeException("Demand not found"));
+
+        // Fetch the related offer using the Offer microservice
+        OfferResponse offer = offerClient.getOffer(demand.getOfferId());
+
+        // Check if the current user is the owner of the offer
+        if (!offer.getOwnerId().equals(currentUserId)) {
+            throw new RuntimeException("Only the owner of the offer can deny demands.");
+        }
+
+        // Deny the demand
+        demand.setStatus(DemandStatus.DENIED);
+
+        // Save the updated demand
+        demandRepository.save(demand);
+
+        // Return the updated demand response
+        return new DemandResponse(
+                demand.getId(),
+                demand.getUserId(),
+                demand.getOfferId(),
+                demand.getStatus(),
+                demand.getSeatsRequested(),
+                demand.getCreatedAt()
+        );
+    }
+
+
 }

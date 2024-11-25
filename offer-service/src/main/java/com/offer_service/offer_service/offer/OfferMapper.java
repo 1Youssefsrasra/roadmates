@@ -19,6 +19,7 @@ public class OfferMapper {
                 .arr_location(request.arr_location())
                 .time(request.time())
                 .price(request.price())
+                .availableSeats(request.availableSeats())
                 .matriculationNumber(request.matriculationNumber())
                 .color(request.color())
                 .brand(request.brand())

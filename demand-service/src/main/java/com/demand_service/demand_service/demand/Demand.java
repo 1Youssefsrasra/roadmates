@@ -13,8 +13,10 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 @Setter
-@Entity
+
 @EntityListeners(AuditingEntityListener.class)
+@Entity
+@Table(name = "user_demand")
 public class Demand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +26,8 @@ public class Demand {
     @Column(name = "offer_id", nullable = false)
     private Integer offerId;
     @Enumerated(EnumType.STRING)
-    private DemandStatus status;
+    @Builder.Default // Ajout pour Builder
+    private DemandStatus status = DemandStatus.PENDING;
     private Integer seatsRequested;
     @CreatedDate
     @Column(updatable = false, nullable = false)

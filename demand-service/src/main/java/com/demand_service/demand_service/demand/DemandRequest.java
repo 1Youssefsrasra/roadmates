@@ -9,7 +9,6 @@ public record DemandRequest(
         Integer id,
         String userId,
         Integer offerId,
-        DemandStatus status,
         Integer seatsRequested
 
 ) {

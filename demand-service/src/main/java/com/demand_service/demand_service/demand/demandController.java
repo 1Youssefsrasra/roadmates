@@ -33,11 +33,22 @@ public class demandController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{demandId}/approve")
-    public ResponseEntity<DemandResponse> approveDemand(@PathVariable Integer demandId, @RequestParam boolean approve, @PathVariable String ownerId) {
-        DemandResponse response = service.approveOrDenyDemand(demandId, approve, ownerId);
-        return ResponseEntity.ok(response);
+    @GetMapping
+    public ResponseEntity<List<DemandResponse>> getAllDemands() {
+        // Fetch all demands from the repository
+        List<Demand> demands = repository.findAll();
+
+        // Map demands to response objects
+        List<DemandResponse> demandResponses = demands.stream()
+                .map(this::mapToDemandResponse)
+                .collect(Collectors.toList());
+
+        // Wrap the result in ResponseEntity
+        return ResponseEntity.ok(demandResponses);
     }
+
+
+
 
     // Get demands by user ID
     @GetMapping("/by-user/{userId}")
@@ -94,7 +105,6 @@ public class demandController {
     }
 
 
-
     private DemandResponse mapToDemandResponse(Demand demand) {
         return new DemandResponse(
                 demand.getId(),              // Integer id
@@ -105,9 +115,21 @@ public class demandController {
                 demand.getCreatedAt()        // LocalDateTime createdAt
         );
     }
-
-    public void deleteDemand(Integer id) {
-        // Delete demand by ID
-        repository.deleteById(id);
+    @PutMapping("/{demandId}/approve")
+    public ResponseEntity<DemandResponse> approveDemand(
+            @PathVariable Integer demandId,
+            @RequestHeader("user-id") String ownerId) {
+        // Appeler la méthode approveDemand dans le service
+        DemandResponse response = service.approveDemand(demandId, ownerId);
+        return ResponseEntity.ok(response);
     }
+    @PutMapping("/{demandId}/deny")
+    public ResponseEntity<DemandResponse> denyDemand(
+            @PathVariable Integer demandId,
+            @RequestHeader("user-id") String ownerId) {
+        // Call the denyDemand method in the service layer
+        DemandResponse response = service.denyDemand(demandId, ownerId);
+        return ResponseEntity.ok(response);
+    }
+
 }

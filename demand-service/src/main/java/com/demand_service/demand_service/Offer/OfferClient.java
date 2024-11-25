@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(
         name = "offer-service",
-        url = "${application.config.user-url:http://localhost:8050/api/v1/offer}"
+        url = "${application.config.offer-url}"
 )
 public interface OfferClient {
 

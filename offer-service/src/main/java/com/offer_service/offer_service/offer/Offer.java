@@ -31,5 +31,9 @@ public class Offer {
     private String brand;
     private String color;
 
+    public String getOwnerId() {
+        return this.userId;
+    }
+
 
 }

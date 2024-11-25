@@ -1,7 +1,7 @@
 package com.demand_service.demand_service.Offer;
 
 
-public record OfferResponse(Integer id, Integer availableSeats, String ownerId) {
+public record OfferResponse(Integer id, Integer availableSeats, String userId) {
     public boolean isAvailable() {
         return availableSeats>0;
     }
@@ -12,6 +12,6 @@ public record OfferResponse(Integer id, Integer availableSeats, String ownerId) 
 
 
     public String getOwnerId() {
-        return ownerId;
+        return userId;
     }
 }
