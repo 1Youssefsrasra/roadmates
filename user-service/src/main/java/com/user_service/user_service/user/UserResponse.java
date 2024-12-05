@@ -10,7 +10,7 @@ public record UserResponse(
         String email,
         Long phonenumber,
         LocalDate birthday,
-        Long IdentityCard,
+        Long identityCard,
         Address address
 ) {
 }

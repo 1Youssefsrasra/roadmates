@@ -3,9 +3,25 @@ server:
 spring:
   cloud:
     gateway:
+      default-filters:
+      - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       discovery:
         locator:
           enabled: true
+          lower-case-service-id: true
+      globalcors:
+        cors-configurations:
+          '[/**]': # Applies to all paths
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods: GET, POST, PUT, DELETE, OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+
+
+
+
+
+
       routes:
         - id: user-service
           uri: lb:http://USER-SERVICE
@@ -23,3 +39,4 @@ spring:
           uri: lb:http://DEMAND-SERVICE
           predicates:
             - Path=/api/v1/demand/**
+
